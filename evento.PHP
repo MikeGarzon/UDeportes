@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -138,7 +139,23 @@ if(isset($_POST['sede'])){
     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
     }
 
+    //Nombre de area
+    $areaName = oci_parse($conexion, "SELECT NOMAREA FROM AREA WHERE IDAREA = '$area'");
+    oci_execute($areaName);
 
+    while ($fila = oci_fetch_array($areaName, OCI_ASSOC+OCI_RETURN_NULLS)) {
+      $AreaNombre=$fila['NOMAREA'];
+      Setcookie("AreaNombre", $AreaNombre);
+    }
+
+    //Nombre de deporte
+    $deporteName = oci_parse($conexion, "SELECT NOMDEPORTE FROM DEPORTE WHERE IDDEPORTE = '$deporte'");
+    oci_execute($deporteName);
+
+    while ($fila = oci_fetch_array($deporteName, OCI_ASSOC+OCI_RETURN_NULLS)) {
+      $DeporteNombre=$fila['NOMDEPORTE'];
+      Setcookie("DeporteNombre", $DeporteNombre);
+    }
 
 
 

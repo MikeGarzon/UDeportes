@@ -114,7 +114,32 @@ if(isset($_POST['sede'])){
       echo $cons;
       echo $consec_inv;
 
+      //Tomamos el nombre de las variables del select
+      $sedeName = oci_parse($conexion, "SELECT NOMCOMPLEJO FROM SEDE WHERE IDCOMPLEJO = '$sede'");
+      oci_execute($sedeName);
 
+      while ($fila = oci_fetch_array($sedeName, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        $sedeNombre=$fila['NOMCOMPLEJO'];
+        Setcookie("sedeNombre", $sedeNombre);
+      }
+
+      //Nombre de equipo
+      $equipoName = oci_parse($conexion, "SELECT NOMEQUIPO FROM EQUIPO WHERE IDEQUIPO = '$equipo'");
+      oci_execute($equipoName);
+
+      while ($fila = oci_fetch_array($equipoName, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        $EquipoNombre=$fila['NOMEQUIPO'];
+        Setcookie("EquipoNombre", $EquipoNombre);
+      }
+
+      //Nombre de estado
+      $estadoName = oci_parse($conexion, "SELECT DESCESTADO FROM ESTADO WHERE IDESTADO = '$estado'");
+      oci_execute($estadoName);
+
+      while ($fila = oci_fetch_array($estadoName, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        $estadoNombre=$fila['DESCESTADO'];
+        Setcookie("estadoNombre", $estadoNombre);
+      }
 
       //Actualizamos y registramos el prestamo
       $st= oci_parse($conexion, "INSERT INTO PRESTAMO (CONSECPRESTA, IDESTADO, CONSECINVE, IDCOMPLEJO, IDEQUIPO, CODPERSONA, FECHAPREST)
